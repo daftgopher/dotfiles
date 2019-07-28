@@ -1,0 +1,51 @@
+[include]
+    path = ~/.gitconfig_local
+[core]
+    editor = code
+[diff]
+    tool = diffmerge
+[difftool "diffmerge"]
+    cmd = diffmerge $LOCAL $REMOTE
+[merge]
+    tool = diffmerge
+[mergetool "diffmerge"]
+    cmd = "diffmerge --merge --result=\"$MERGED\" \"$LOCAL\" \"$(if test -f \"$BASE\"; then echo \"$BASE\"; else echo \"$LOCAL\"; fi)\" \"$REMOTE\""
+    trustExitCode = true
+[alias]
+    # one-line log
+    l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+
+    a = add
+    aa = add -A
+    ap = add -p
+    c = commit --verbose
+    ca = commit -a --verbose
+    cm = commit -m
+    cam = commit -a -m
+    m = commit --amend --verbose
+
+    d = diff
+    ds = diff --stat
+    dc = diff --cached
+
+    pff = pull --ff-only
+    rb = rebase
+    frb = !git fetch && git rebase && :
+    pfwl = git push --force-with-lease
+
+    mt = mergetool
+
+    s = status -s
+    st = status
+    co = checkout
+    cob = checkout -b
+
+    br = branch
+
+    # list branches sorted by last modified
+    b = "!git for-each-ref --sort='-authordate' --format='%(authordate)%09%(objectname:short)%09%(refname)' refs/heads | sed -e 's-refs/heads/--'"
+
+    # list aliases
+    la = "!git config -l | grep alias | cut -c 7-"
+[color]
+    ui = true
