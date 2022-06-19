@@ -1,7 +1,7 @@
 [include]
     path = ~/.gitconfig_local
 [core]
-    editor = code
+    editor = nvim
 [diff]
     tool = diffmerge
 [difftool "diffmerge"]
@@ -31,6 +31,7 @@
     pff = pull --ff-only
     rb = rebase
     frb = !git fetch && git rebase && :
+    pu = !git push -u origin $(git branch --show-current)
     pfwl = git push --force-with-lease
 
     mt = mergetool
@@ -49,3 +50,6 @@
     la = "!git config -l | grep alias | cut -c 7-"
 [color]
     ui = true
+[user]
+	name = daftgopher
+	email = daftgopher@users.noreply.github.com
