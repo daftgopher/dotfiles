@@ -11,10 +11,12 @@ set expandtab
 set smartindent
 set nocompatible
 set termguicolors     " enable true colors support
+set cmdheight=2
 
 call plug#begin('~/.vim/plugged')
 Plug 'Mofiqul/dracula.nvim'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'ray-x/aurora'
 Plug 'sheerun/vim-polyglot'
 Plug 'othree/html5.vim'
 Plug 'pangloss/vim-javascript'
@@ -22,6 +24,9 @@ Plug 'evanleck/vim-svelte', {'branch': 'main'}
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'neovim/nvim-lspconfig'
+Plug 'ray-x/guihua.lua', {'do': 'cd lua/fzy && make' }
+Plug 'ray-x/navigator.lua'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -37,7 +42,7 @@ call plug#end()
 let NERDTreeShowHidden=1
 let g:indentLine_char = '│' " for indentLine plugin
 let g:sneak#label = 1
-colorscheme dracula
+colorscheme aurora
 
 " In case you mess up your write quits with a shift or something
 command! Q q
@@ -76,10 +81,8 @@ nnoremap <leader>\ <C-w>v <Bar> <C-6> <Bar> <C-w>l
 
 " Fuzzy finder
 nnoremap <C-p> <cmd>Telescope find_files<cr>
-nnoremap <C-l> <cmd>Telescope live_grep<cr>
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <C-f> <cmd>Telescope live_grep<cr>
+nnoremap <C-b> <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
 
 " Remap f and t to Sneak
@@ -101,6 +104,13 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
+" ----- Goto Preview -----
+
+" Note: This plugin really isn't used for it's LSP - only used for it's stacking floating windown implementation
+
+lua <<EOF
+require'navigator'.setup()
+EOF
 
 " --- COC SETUP ---
 
@@ -110,9 +120,10 @@ inoremap <expr><s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 
 " Intellisesnse
-nmap <silent> gd :PreviewDefinition<CR>
-nmap <silent> gy :PreviewTypeDefinition<CR>
-nmap <silent> gr <Plug>(coc-references)
+" nmap <silent> gd :PreviewDefinition<CR>
+" nmap <silent> gy :PreviewTypeDefinition<CR>
+" nmap <silent> gr <Plug>(coc-references)
+" nnoremap gpr <cmd>lua require('goto-preview').goto_preview_references()<CR>
 
 " Show documentation (\h)
 nnoremap <silent> <leader>h :call <SID>show_documentation()<CR>
@@ -127,6 +138,8 @@ endfunction
 
 " Rename (\rn)
 nmap <leader>rn <Plug>(coc-rename)
+
+nmap <leader>cl <Plug>(coc-codelens-action)
 
 " Inline previews (similar to VSCode)
 function! OpenPreviewInline(...)
