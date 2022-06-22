@@ -37,6 +37,8 @@ Plug 'tpope/vim-surround'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Yggdroot/indentLine'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 call plug#end()
 
 let NERDTreeShowHidden=1
@@ -54,9 +56,6 @@ nnoremap <C-g> :NERDTreeFind<CR>
 
 " Shortcut to instantly re-source this file after changing it
 nnoremap <Leader><CR> :so ~/.vimrc<CR>
-
-" Shortcut to tweak vim settings
-nnoremap <leader>i :e ~/.vimrc<CR>
 
 " Make navigating quickfix lists easier
 nnoremap <C-j> :cnext<CR>
@@ -104,12 +103,19 @@ inoremap <A-k> <Esc>:m .-2<CR>==gi
 vnoremap <A-j> :m '>+1<CR>gv=gv
 vnoremap <A-k> :m '<-2<CR>gv=gv
 
+" Open in Github
+nnoremap <leader>og :GBrowse<CR>
+vnoremap <leader>og :'<,'>GBrowse<CR>
+
 " ----- Goto Preview -----
 
 " Note: This plugin really isn't used for it's LSP - only used for it's stacking floating windown implementation
 
 lua <<EOF
 require'navigator'.setup()
+require('goto-preview').setup {
+  default_mappings = true;
+}
 EOF
 
 " --- COC SETUP ---
