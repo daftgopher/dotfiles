@@ -1,0 +1,60 @@
+export ZSH="/Users/mattwaldron/.oh-my-zsh"
+ZSH_THEME="daftgopher"
+plugins=(git fasd node npm github)
+fpath=( ~/.zfunc "${fpath[@]}" )
+
+setopt NO_CASE_GLOB
+setopt SHARE_HISTORY
+setopt APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_REDUCE_BLANKS
+
+# Oh-my-zsh
+source $ZSH/oh-my-zsh.sh
+
+# FASD
+# eval "$(fasd --init auto)"
+# alias j="fasd_cd -d" # behave like autojump
+
+# ASDF
+. "$HOME/.asdf/asdf.sh"
+fpath=(${ASDF_DIR}/completions $fpath)
+autoload -Uz compinit && compinit
+
+# Editor
+export EDITOR=nvim
+
+# Aliases
+alias d="docker"
+alias dc="docker-compose"
+
+alias kc="kubectl"
+alias kn="kubens"
+alias kx="kubectx"
+
+alias nv="nvim"
+
+alias zc="nvim $HOME/.zshrc"
+alias zcs="source $HOME/.zshrc"
+
+alias uuid="uuidgen | tr '[:upper:]' '[:lower:]'"
+alias pibox="kitty +kitten ssh pibox2@homebox.local"
+
+# Functions
+# function penv () { env $(cat .env) poetry shell }
+
+# PATH stuff
+export GO_PATH="$HOME/go"
+export GO_BIN="$GO_PATH/bin"
+export CARGO_BIN="$HOME/.cargo/bin"
+export STANDARD_BINS="$HOME/bin:/usr/local/bin:/sbin:/usr/sbin:$HOME/.local/bin"
+export POETRY_BIN="$HOME/.poetry/bin"
+export PNPM_HOME="$HOME/Library/pnpm"
+
+export PATH="$STANDARD_BINS:$CARGO_BIN:$GO_BIN:$POETRY_BIN:$PNPM_HOME:$PATH"
+
+
+# Generated for envman. Do not edit.
+# [ -s "$HOME/.config/envman/load.sh" ] && source "$HOME/.config/envman/load.sh"
+
+
