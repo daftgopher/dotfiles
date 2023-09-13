@@ -1,4 +1,4 @@
-export ZSH="/Users/mattwaldron/.oh-my-zsh"
+export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="daftgopher"
 plugins=(git fasd node npm github)
 fpath=( ~/.zfunc "${fpath[@]}" )
