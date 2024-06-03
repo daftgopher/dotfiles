@@ -27,7 +27,7 @@ if [[ $OS == "Mac" ]]; then
 	INSTALLER="brew"
 elif [[ $OS == "Linux" ]]; then
 	INSTALLER="apt"
-	apt update
+	sudo apt update
 fi
 
 PACKAGES=("curl" "git" "fd" "fzf" "neovim" "nmap" "gpg" "gawk" "tmux")
@@ -38,7 +38,7 @@ function installPackages() {
 	local packages=("$@")
 	for P in "${packages[@]}"; do
 		if [[ $OS == "Linux" ]]; then
-			apt install -y "$P"
+			sudo apt install -y "$P"
 		elif [[ $OS == "Mac" ]]; then
 			brew install "$P"
 		fi
